@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你的个人色彩解读 | KPC 结果</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Apply Inter font */
+        }
+        /* Simple fade-in animation */
+        .fade-in {
+            animation: fadeIn ease 1s;
+        }
+        @keyframes fadeIn {
+            0% {opacity:0;}
+            100% {opacity:1;}
+        }
+        /* Hide element */
+        .hidden {
+            display: none;
+        }
+        /* Custom scrollbar for better aesthetics (optional) */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* slate-300 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; /* slate-400 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-pink-50 to-purple-50 min-h-screen text-slate-700 p-4 md:p-8 flex items-center justify-center">
+
+    <div id="container" class="max-w-3xl w-full mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
+
+        <section id="trigger" class="text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 mb-4">个人色彩解读</h1>
+            <p class="text-lg text-slate-600 mb-6">准备好查看你的专属色彩分析结果了吗？</p>
+            <button id="viewResultsBtn" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                查看我的色彩解读 ✨
+            </button>
+        </section>
+
+        <section id="loading" class="hidden text-center mt-10">
+             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p class="text-lg text-slate-600">正在生成你的色彩报告...</p>
+        </section>
+
+        <section id="results" class="hidden mt-8 fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 mb-6">你的专属色彩解读</h2>
+
+            <div class="bg-gradient-to-r from-blue-100 via-pink-100 to-purple-100 p-6 rounded-lg shadow-md mb-6 text-center">
+                 <p class="text-lg mb-2">根据你的独特描述，你的个人色彩类型倾向于：</p>
+                <h3 id="resultType" class="text-2xl md:text-3xl font-bold text-blue-700 mb-3"></h3>
+                 <p id="resultVibe" class="text-md text-slate-600 italic mb-4"></p>
+                 <img id="resultImage" src="https://placehold.co/600x300/E0F2FE/0C4A6E?text=你的色彩氛围" alt="色彩氛围示意图" class="rounded-lg mx-auto shadow-sm mb-2 w-full max-w-md">
+                 <p class="text-sm text-slate-500">(示意图)</p>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="text-xl font-semibold text-slate-700 mb-3 border-b-2 border-pink-300 pb-1">你的色彩故事 (分析依据)</h4>
+                <p id="resultRationale" class="text-slate-600 leading-relaxed text-sm md:text-base"></p>
+                <p class="text-sm text-slate-500 mt-2">置信度: <span id="resultConfidence" class="font-medium"></span></p>
+                 <p id="resultSecondary" class="text-sm text-slate-500 mt-1"></p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                    <h4 class="text-lg font-semibold text-blue-700 mb-2">核心色彩特征</h4>
+                    <p id="resultCharacteristics" class="text-slate-600"></p>
+                </div>
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <h4 class="text-lg font-semibold text-pink-700 mb-2">点亮你的推荐色</h4>
+                    <ul id="resultKeywords" class="list-disc list-inside text-slate-600 space-y-1"></ul>
+                     <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3">
+                         </div>
+                </div>
+            </div>
+
+             <div class="mb-6 bg-purple-50 p-4 rounded-lg shadow-sm">
+                 <h4 class="text-lg font-semibold text-purple-700 mb-2">风格融合小贴士</h4>
+                 <p id="resultStyleTip" class="text-slate-600"></p>
+            </div>
+
+            <div class="text-center mt-8 border-t border-slate-200 pt-6">
+                <p class="text-md text-slate-600 mb-4">✨ 记住，个人色彩是帮助你绽放光彩的工具，而不是限制。享受探索和玩转色彩的乐趣吧！ ✨</p>
+                <p class="text-xs text-slate-400">(免责声明：本分析基于模拟数据生成，仅供演示。专业的个人色彩诊断需要结合您的具体信息和线下测试。)</p>
+                 </div>
+        </section>
+
+    </div>
+
+    <script>
+        const viewResultsBtn = document.getElementById('viewResultsBtn');
+        const triggerSection = document.getElementById('trigger');
+        const loadingSection = document.getElementById('loading');
+        const resultsSection = document.getElementById('results');
+        // const goBackBtn = document.getElementById('goBackBtn'); // If using a back button
+
+        viewResultsBtn.addEventListener('click', () => {
+            // Hide trigger button section, show loading
+            triggerSection.classList.add('hidden');
+            loadingSection.classList.remove('hidden');
+            resultsSection.classList.add('hidden'); // Ensure results are hidden
+
+            // --- SIMULATED ANALYSIS ---
+            // In a real application, you would fetch the user's specific data
+            // (from Google Form results linked perhaps via ID) and send it to an LLM.
+            // Here, we use placeholder data for demonstration.
+            const placeholderUserData = {
+                undertone: 'cool', // Example data
+                sun_reaction: 'burn_easily',
+                foundation_match: 'cool',
+                skin_status: ['redness', 'pale'],
+                veins: 'blue_purple',
+                hair_color_desc: '深棕色，略带灰调',
+                eye_color_desc: '深棕色，眼白偏蓝',
+                contrast: 'medium',
+                style_preference: 'elegant_gentle',
+                flattering_colors: '灰粉色, 雾霾蓝, 银色',
+                unflattering_colors: '亮橘色, 土黄色',
+                lipstick_exp: '玫瑰豆沙色适合，橘色系显黄',
+                blush_exp: '冷粉色自然，珊瑚色奇怪',
+                metal_preference: 'silver'
+            };
+
+            // Simulate a delay for analysis
+            setTimeout(() => {
+                const result = simulateKPCAnalysis(placeholderUserData); // Use placeholder data
+                displayResults(result); // Display the results
+
+                loadingSection.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                resultsSection.classList.add('fade-in');
+                 // Scroll to results smoothly
+                 resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }, 1500); // Simulate 1.5 seconds processing time
+        });
+
+        // Optional: Add event listener for a back button if you implement one
+        // goBackBtn?.addEventListener('click', () => {
+        //     resultsSection.classList.add('hidden');
+        //     triggerSection.classList.remove('hidden');
+        //     triggerSection.classList.add('fade-in');
+        // });
+
+
+        // --- SIMULATION FUNCTION (Same simplified logic as before) ---
+        function simulateKPCAnalysis(data) {
+            // WARNING: This is highly simplified logic for demonstration ONLY.
+            // It does NOT accurately represent KPC analysis.
+            let coolScore = 0;
+            let warmScore = 0;
+            let lightScore = 0;
+            let deepScore = 0;
+            let clearScore = 0;
+            let mutedScore = 0;
+
+            // Simplified scoring based on some inputs
+            if (data.undertone === 'cool' || data.sun_reaction === 'burn_easily') coolScore += 2;
+            if (data.undertone === 'warm' || data.sun_reaction === 'tan_easily') warmScore += 2;
+            if (data.undertone === 'neutral' || data.undertone === 'mixed' || data.sun_reaction === 'burn_then_tan') { coolScore++; warmScore++; }
+            if (data.undertone === 'olive') { warmScore++; coolScore++; mutedScore++; }
+
+            // Vein Test (Very Low Weight)
+            if (data.veins === 'blue_purple') coolScore += 0.5;
+            if (data.veins === 'green_olive') warmScore += 0.5;
+            if (data.veins === 'mixed_veins') { coolScore += 0.25; warmScore += 0.25; }
+
+            // Contrast
+            if (data.contrast === 'high') { clearScore += 2; deepScore++; lightScore++; }
+            if (data.contrast === 'low') { mutedScore += 2; }
+            if (data.contrast === 'medium') { clearScore++; mutedScore++; }
+
+            // Flattering Colors (Simple Keyword Check)
+            const flatteringText = (data.flattering_colors || '').toLowerCase();
+            if (flatteringText.includes('粉') || flatteringText.includes('蓝') || flatteringText.includes('紫') || flatteringText.includes('灰') || flatteringText.includes('银')) coolScore++;
+            if (flatteringText.includes('橘') || flatteringText.includes('黄') || flatteringText.includes('棕') || flatteringText.includes('绿') || flatteringText.includes('杏') || flatteringText.includes('金')) warmScore++;
+            if (flatteringText.includes('亮') || flatteringText.includes('鲜艳') || flatteringText.includes('纯白')) clearScore++;
+            if (flatteringText.includes('柔和') || flatteringText.includes('灰调') || flatteringText.includes('浊')) mutedScore++;
+            if (flatteringText.includes('浅') || flatteringText.includes('淡')) lightScore++;
+            if (flatteringText.includes('深') || flatteringText.includes('浓')) deepScore++;
+
+            // Makeup experience check
+             const lipstickText = (data.lipstick_exp || '').toLowerCase();
+             if (lipstickText.includes('粉') || lipstickText.includes('玫红') || lipstickText.includes('梅子') || lipstickText.includes('冷')) coolScore++;
+             if (lipstickText.includes('橘') || lipstickText.includes('珊瑚') || lipstickText.includes('暖')) warmScore++;
+             const blushText = (data.blush_exp || '').toLowerCase();
+             if (blushText.includes('粉') || blushText.includes('紫') || blushText.includes('冷')) coolScore++;
+             if (blushText.includes('橘') || blushText.includes('蜜桃') || blushText.includes('珊瑚')) warmScore++;
+
+             // Metal preference (low weight)
+             if (data.metal_preference === 'silver') coolScore += 0.5;
+             if (data.metal_preference === 'gold') warmScore += 0.5;
+
+
+            // Determine dominant season based on warm/cool
+            let season = '';
+            let tone = '';
+             // Add slight bias towards cool if scores are equal but more cool indicators exist
+             let finalCoolScore = coolScore + (data.undertone === 'cool' ? 0.1 : 0) + (data.sun_reaction === 'burn_easily' ? 0.1 : 0) + (data.veins === 'blue_purple' ? 0.05 : 0);
+             let finalWarmScore = warmScore + (data.undertone === 'warm' ? 0.1 : 0) + (data.sun_reaction === 'tan_easily' ? 0.1 : 0) + (data.veins === 'green_olive' ? 0.05 : 0);
+
+
+            if (finalCoolScore > finalWarmScore) {
+                tone = 'Cool (冷调)';
+                if (lightScore > deepScore || mutedScore > clearScore + 1) { // Bias towards Mute if mutedScore is significantly higher
+                    season = 'Summer (夏季)';
+                } else {
+                    season = 'Winter (冬季)';
+                }
+            } else {
+                tone = 'Warm (暖调)';
+                if (lightScore > deepScore || clearScore > mutedScore + 1) { // Bias towards Clear if clearScore is significantly higher
+                    season = 'Spring (春季)';
+                } else {
+                    season = 'Autumn (秋季)';
+                }
+            }
+
+            // Determine subtype (Highly Simplified) - Same logic as before
+            let subType = '';
+            let characteristics = '';
+            let keywords = [];
+            let vibe = '';
+            let styleTip = '';
+            let placeholderImageUrl = 'https://placehold.co/600x300/f0f9ff/0c4a6e?text=探索色彩'; // Default
+
+             if (season === 'Summer (夏季)') {
+                 placeholderImageUrl = 'https://placehold.co/600x300/eff6ff/3730a3?text=夏日清凉';
+                if (mutedScore > clearScore && mutedScore >= lightScore) { // Prioritize Mute slightly more
+                    subType = 'Mute (柔和型)'; characteristics = '冷调, 中等/偏浅明度, 柔和/浊色'; keywords = ['灰粉', '雾霾蓝', '薰衣草紫', '柔和白', '可可色']; vibe = '散发着沉静、温柔且知性的优雅魅力。'; styleTip = '尝试莫兰迪色系的简约穿搭，搭配银饰或珍珠，更能凸显你的温柔气质。';
+                } else if (lightScore > mutedScore && lightScore >= clearScore) { // Prioritize Light
+                    subType = 'Light (浅色型)'; characteristics = '冷调, 高明度, 清澈/柔和'; keywords = ['婴儿蓝', '淡粉紫', '薄荷绿(冷)', '纯白', '浅灰']; vibe = '拥有如夏日晴空般清澈、纯净的甜美气质。'; styleTip = '轻盈的浅色系服装，如亚麻、雪纺材质，配合简洁银饰，打造清新脱俗感。';
+                } else { // Default to True/Cool
+                    subType = 'True/Cool (标准冷色型)'; characteristics = '冷调, 中等明度, 相对清澈'; keywords = ['覆盆子粉', '天蓝', '正灰', '海军蓝(柔和)', '冷调红']; vibe = '是夏日色彩的经典代表，冷静而优雅。'; styleTip = '选择饱和度适中的冷色调单品，打造经典不过时的优雅风格。';
+                }
+            } else if (season === 'Winter (冬季)') {
+                 placeholderImageUrl = 'https://placehold.co/600x300/e2e8f0/1e293b?text=冬日酷感';
+                if (clearScore > mutedScore && (data.contrast === 'high' || clearScore >= deepScore)) { // Prioritize Bright/Clear
+                    subType = 'Bright/Clear (亮色/净色型)'; characteristics = '冷调, 高对比度, 鲜艳/清澈'; keywords = ['正黑', '纯白', '宝蓝', '玫红', '柠檬黄(冷)']; vibe = '拥有如冬日夜空般醒目、强烈的时尚气场。'; styleTip = '大胆尝试高对比度的色彩搭配，如黑白配或亮色点缀，配合利落剪裁，气场全开。';
+                } else if (deepScore > clearScore && deepScore >= lightScore) { // Prioritize Deep/Dark
+                    subType = 'Deep/Dark (深色型)'; characteristics = '冷调, 低明度, 浓郁/相对清澈'; keywords = ['深海军蓝', '炭黑', '酒红(冷)', '深紫', '松石绿(深)']; vibe = '散发着神秘、成熟且充满力量的酷感魅力。'; styleTip = '选择深邃、饱和的冷色调，如丝绒、皮革等有质感的面料，搭配大气银饰，展现高级感。';
+                } else { // Default to True/Cool
+                     subType = 'True/Cool (标准冷色型)'; characteristics = '冷调, 中等偏深明度, 鲜艳/清澈'; keywords = ['正红(冷)', '纯蓝', '翠绿', '亮紫', '黑白']; vibe = '是冬季色彩的核心，冷静、强烈且纯粹。'; styleTip = '运用饱和度高的纯正冷色，打造干练、摩登的都市风格。';
+                }
+            } else if (season === 'Spring (春季)') {
+                 placeholderImageUrl = 'https://placehold.co/600x300/fef3c7/f97316?text=春日活力';
+                 if (clearScore > mutedScore && (data.contrast === 'high' || clearScore >= lightScore)) { // Prioritize Bright
+                    subType = 'Bright (亮色型)'; characteristics = '暖调, 中高对比度, 鲜艳/清澈'; keywords = ['亮珊瑚', '鲜橘', '暖调绿', '明黄', '象牙白']; vibe = '如同春天盛放的花朵，充满活力与明媚感。'; styleTip = '拥抱鲜艳、明快的暖色调，可以尝试撞色搭配，配合金色饰品，元气满满。';
+                } else if (lightScore > clearScore && lightScore >= mutedScore) { // Prioritize Light
+                    subType = 'Light (浅色型)'; characteristics = '暖调, 高明度, 清澈/柔和'; keywords = ['蜜桃粉', '淡黄', '浅绿(暖)', '米白', '浅杏']; vibe = '像春天清晨的阳光，温柔、清新又甜美。'; styleTip = '选择轻柔的暖调浅色，如碎花、蕾丝元素，搭配小巧金色饰品，打造温柔可人形象。';
+                } else { // Default to True/Warm
+                    subType = 'True/Warm (标准暖色型)'; characteristics = '暖调, 中等明度, 相对鲜艳'; keywords = ['暖调红', '橘红', '金色', '草绿', '米黄']; vibe = '是春天温暖、生机的核心体现。'; styleTip = '选择纯正的暖色调，如棉质、针织单品，打造亲切、活力的日常风格。';
+                }
+            } else { // Autumn
+                 placeholderImageUrl = 'https://placehold.co/600x300/fed7aa/9a3412?text=秋日温暖';
+                if (mutedScore > clearScore && mutedScore >= deepScore) { // Prioritize Mute
+                    subType = 'Mute (柔和型)'; characteristics = '暖调, 中等/偏深明度, 柔和/浊色'; keywords = ['卡其', '橄榄绿', '豆沙色(暖)', '燕麦色', '灰调橘']; vibe = '自带秋日午后的静谧与温柔，知性而自然。'; styleTip = '尝试大地色系的叠穿，运用棉麻、灯芯绒等材质，搭配哑光金饰，营造舒适高级感。';
+                } else if (deepScore > mutedScore && deepScore >= lightScore) { // Prioritize Deep
+                    subType = 'Deep (深色型)'; characteristics = '暖调, 低明度, 浓郁/浊色'; keywords = ['深棕', '酒红(暖)', '芥末黄', '森林绿(暖)', '赤陶']; vibe = '如同深秋的浓郁色彩，成熟、稳重且富有韵味。'; styleTip = '选择深沉、温暖的大地色系，如毛呢、皮革材质，搭配复古金色饰品，展现温暖力量感。';
+                } else { // Default to True/Warm
+                    subType = 'True/Warm (标准暖色型)'; characteristics = '暖调, 中等偏深明度, 浓郁/浊色'; keywords = ['南瓜色', '枫叶红', '土黄', '苔藓绿', '暖棕']; vibe = '是秋季丰收、温暖的核心代表。'; styleTip = '运用醇厚的暖色调，如格纹、针织元素，打造经典、舒适的秋日氛围。';
+                }
+            }
+
+            // Simplified Rationale (using the provided placeholder data for example)
+            let rationale = `综合来看：\n`;
+            rationale += `- 你的皮肤在阳光下易晒伤 (${data.sun_reaction}) 且自我感觉偏冷 (${data.undertone})，初步指向 ${tone}。\n`;
+            if (data.veins && data.veins !== 'unclear_veins') {
+                rationale += `- 血管颜色观察 (${data.veins}) 作为次要参考，也与 ${tone} 方向一致。\n`;
+            }
+             rationale += `- 你提到适合 ${data.flattering_colors} 等颜色，而不适合 ${data.unflattering_colors}，这进一步支持了 ${tone} 以及 ${characteristics.split(', ')[2]} (清/浊度) 的判断。\n`; // Extracting chroma description
+             rationale += `- 你的妆容经验 (${data.lipstick_exp}, ${data.blush_exp}) 和饰品偏好 (${data.metal_preference}) 也与 ${season} ${subType} 类型的特征相符。\n`;
+            rationale += `(注意：以上为基于示例数据的模拟分析，仅供演示。)\n`;
+
+
+            return {
+                primaryType: `${season} ${subType}`,
+                koreanName: getKoreanName(`${season} ${subType}`),
+                confidence: ['Medium', 'High', 'Low'][Math.floor(Math.random() * 3)], // Random confidence
+                rationale: rationale,
+                secondaryType: null,
+                characteristics: characteristics,
+                keywords: keywords,
+                vibe: vibe,
+                styleTip: styleTip,
+                imageUrl: placeholderImageUrl
+            };
+        }
+
+        // Helper function to get Korean names (Same as before)
+        function getKoreanName(englishType) {
+             const mapping = {
+                "Spring Light": "봄 라이트", "Spring Bright": "봄 브라이트", "Spring True/Warm": "봄 트루",
+                "Summer Light": "여름 라이트", "Summer Mute": "여름 뮤트", "Summer True/Cool": "여름 트루",
+                "Autumn Mute": "가을 뮤트", "Autumn Deep": "가을 딥", "Autumn True/Warm": "가을 트루",
+                "Winter Bright": "겨울 브라이트", "Winter Deep": "겨울 딥", "Winter True/Cool": "겨울 트루"
+            };
+            for (const key in mapping) {
+                if (englishType.includes(key.split(' ')[0]) && englishType.includes(key.split(' ')[1])) {
+                    return mapping[key];
+                }
+            }
+             if (englishType.includes('Summer')) return '여름 쿨';
+             if (englishType.includes('Winter')) return '겨울 쿨';
+             if (englishType.includes('Spring')) return '봄 웜';
+             if (englishType.includes('Autumn')) return '가을 웜';
+            return '알 수 없음';
+        }
+
+        // Function to display results (Same as before)
+        function displayResults(result) {
+            document.getElementById('resultType').textContent = `${result.koreanName} (${result.primaryType})`;
+            document.getElementById('resultVibe').textContent = result.vibe;
+            document.getElementById('resultImage').src = result.imageUrl;
+            document.getElementById('resultImage').alt = `${result.primaryType} 色彩氛围示意图`;
+            document.getElementById('resultConfidence').textContent = result.confidence;
+            // Use innerHTML for rationale to render newlines (\n) as breaks
+            document.getElementById('resultRationale').innerHTML = result.rationale.replace(/\n/g, '<br>');
+
+
+            const secondaryEl = document.getElementById('resultSecondary');
+            if (result.secondaryType) {
+                secondaryEl.textContent = `次要可能性: ${result.secondaryType}`;
+                secondaryEl.classList.remove('hidden');
+            } else {
+                 secondaryEl.textContent = '';
+                 secondaryEl.classList.add('hidden');
+            }
+
+            document.getElementById('resultCharacteristics').textContent = result.characteristics;
+            document.getElementById('resultStyleTip').textContent = result.styleTip;
+
+            const keywordsList = document.getElementById('resultKeywords');
+            keywordsList.innerHTML = ''; // Clear previous list
+            result.keywords.forEach(keyword => {
+                const li = document.createElement('li');
+                li.textContent = keyword;
+                keywordsList.appendChild(li);
+            });
+
+             // Display color swatches (Same logic as before)
+            const swatchesContainer = document.getElementById('colorSwatches');
+            swatchesContainer.innerHTML = '';
+            const placeholderColors = {
+                '灰粉': '#D8BFD8', '雾霾蓝': '#B0C4DE', '薰衣草紫': '#E6E6FA', '柔和白': '#F5F5F5', '可可色': '#D2B48C',
+                '婴儿蓝': '#87CEFA', '淡粉紫': '#DDA0DD', '薄荷绿(冷)': '#98FB98', '纯白': '#FFFFFF', '浅灰': '#D3D3D3',
+                '覆盆子粉': '#C71585', '天蓝': '#87CEEB', '正灰': '#808080', '海军蓝(柔和)': '#6495ED', '冷调红': '#DC143C',
+                '正黑': '#000000', '纯白': '#FFFFFF', '宝蓝': '#4169E1', '玫红': '#FF00FF', '柠檬黄(冷)': '#FFFACD',
+                '深海军蓝': '#000080', '炭黑': '#36454F', '酒红(冷)': '#8B0000', '深紫': '#800080', '松石绿(深)': '#008080',
+                 '正红(冷)': '#FF0000', '纯蓝': '#0000FF', '翠绿': '#008000', '亮紫': '#BF00FF', '黑白': '#FFFFFF',
+                '亮珊瑚': '#FF7F50', '鲜橘': '#FFA500', '暖调绿': '#90EE90', '明黄': '#FFFF00', '象牙白': '#FFFFF0',
+                '蜜桃粉': '#FFDAB9', '淡黄': '#FFFFE0', '浅绿(暖)': '#98FB98', '米白': '#F5F5DC', '浅杏': '#FFEFD5',
+                 '暖调红': '#FF6347', '橘红': '#FF4500', '金色': '#FFD700', '草绿': '#9ACD32', '米黄': '#F5F5DC',
+                '卡其': '#C3B091', '橄榄绿': '#808000', '豆沙色(暖)': '#BC8F8F', '燕麦色': '#D8CDBA', '灰调橘': '#E0984E',
+                '深棕': '#8B4513', '酒红(暖)': '#A52A2A', '芥末黄': '#FFDB58', '森林绿(暖)': '#228B22', '赤陶': '#E2725B',
+                 '南瓜色': '#FF7518', '枫叶红': '#B22222', '土黄': '#DAA520', '苔藓绿': '#8FBC8F', '暖棕': '#A0522D'
+            };
+             if (result.keywords.includes('黑白')) {
+                 const swatchBlack = document.createElement('div');
+                 swatchBlack.style.backgroundColor = '#000000';
+                 swatchBlack.className = 'w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip';
+                 swatchBlack.title = '黑色';
+                 swatchesContainer.appendChild(swatchBlack);
+            }
+            result.keywords.slice(0, 5).forEach(keyword => {
+                 const colorHex = placeholderColors[keyword] || '#cccccc';
+                 const swatch = document.createElement('div');
+                 swatch.style.backgroundColor = colorHex;
+                 swatch.className = 'w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip';
+                 swatch.title = keyword;
+                 swatchesContainer.appendChild(swatch);
+            });
+        }
+
+    </script>
+
+</body>
+</html>
