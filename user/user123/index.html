@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你的个人色彩解读 | KPC 结果</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn ease 1s;
+        }
+        @keyframes fadeIn {
+            0% {opacity:0;}
+            100% {opacity:1;}
+        }
+        .hidden {
+            display: none;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Tooltip styling for color swatches */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 100px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the element */
+            left: 50%;
+            margin-left: -50px; /* Use half of the width (100/2 = 50), to center */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-pink-50 to-purple-50 min-h-screen text-slate-700 p-4 md:p-8 flex items-center justify-center">
+
+    <div id="container" class="max-w-3xl w-full mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
+
+        <section id="trigger" class="text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 mb-4">个人色彩解读</h1>
+            <p class="text-lg text-slate-600 mb-6">准备好查看你的专属色彩分析结果了吗？</p>
+            <button id="viewResultsBtn" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                查看我的色彩解读 ✨
+            </button>
+        </section>
+
+        <section id="loading" class="hidden text-center mt-10">
+             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p class="text-lg text-slate-600">正在加载你的色彩报告...</p>
+        </section>
+
+        <section id="results" class="hidden mt-8 fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 mb-6">你的专属色彩解读</h2>
+
+            <div class="bg-gradient-to-r from-blue-100 via-pink-100 to-purple-100 p-6 rounded-lg shadow-md mb-6 text-center">
+                 <p class="text-lg mb-2">根据你的分析结果，你的个人色彩类型倾向于：</p>
+                <h3 id="resultType" class="text-2xl md:text-3xl font-bold text-blue-700 mb-3"></h3>
+                 <p id="resultVibe" class="text-md text-slate-600 italic mb-4"></p>
+                 <img id="resultImage" src="https://placehold.co/600x300/E0F2FE/0C4A6E?text=你的色彩氛围" alt="色彩氛围示意图" class="rounded-lg mx-auto shadow-sm mb-2 w-full max-w-md">
+                 <p class="text-sm text-slate-500">(示意图)</p>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="text-xl font-semibold text-slate-700 mb-3 border-b-2 border-pink-300 pb-1">你的色彩故事 (分析依据)</h4>
+                <div id="resultRationale" class="text-slate-600 leading-relaxed text-sm md:text-base space-y-2"></div>
+                <p class="text-sm text-slate-500 mt-2">置信度: <span id="resultConfidence" class="font-medium"></span></p>
+                 <p id="resultSecondary" class="text-sm text-slate-500 mt-1"></p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                    <h4 class="text-lg font-semibold text-blue-700 mb-2">核心色彩特征</h4>
+                    <p id="resultCharacteristics" class="text-slate-600"></p>
+                </div>
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <h4 class="text-lg font-semibold text-pink-700 mb-2">点亮你的推荐色</h4>
+                    <ul id="resultKeywords" class="list-disc list-inside text-slate-600 space-y-1"></ul>
+                     <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3">
+                         </div>
+                </div>
+            </div>
+
+             <div class="mb-6 bg-purple-50 p-4 rounded-lg shadow-sm">
+                 <h4 class="text-lg font-semibold text-purple-700 mb-2">风格融合小贴士</h4>
+                 <p id="resultStyleTip" class="text-slate-600"></p>
+            </div>
+
+            <div class="text-center mt-8 border-t border-slate-200 pt-6">
+                <p class="text-md text-slate-600 mb-4">✨ 记住，个人色彩是帮助你绽放光彩的工具，而不是限制。享受探索和玩转色彩的乐趣吧！ ✨</p>
+                <p class="text-xs text-slate-400">(免责声明：本分析结果基于提供的数据生成。专业的个人色彩诊断需要结合您的具体信息和线下测试。)</p>
+            </div>
+        </section>
+
+        <section id="error" class="hidden text-center mt-10 text-red-600">
+             <h2 class="text-2xl font-bold mb-4">加载错误</h2>
+             <p id="errorMessage">无法加载您的色彩报告。请确保结果文件 (result.json) 存在于正确的路径下。</p>
+             <p class="text-sm mt-2">(如果您是管理员，请检查对应分支下是否已正确放置 result.json 文件。)</p>
+         </section>
+
+    </div>
+
+    <script>
+        const viewResultsBtn = document.getElementById('viewResultsBtn');
+        const triggerSection = document.getElementById('trigger');
+        const loadingSection = document.getElementById('loading');
+        const resultsSection = document.getElementById('results');
+        const errorSection = document.getElementById('error');
+        const errorMessage = document.getElementById('errorMessage');
+
+        viewResultsBtn.addEventListener('click', async () => { // Use async for await
+            // Hide trigger, show loading
+            triggerSection.classList.add('hidden');
+            loadingSection.classList.remove('hidden');
+            resultsSection.classList.add('hidden');
+            errorSection.classList.add('hidden');
+
+            // --- Static JSON Data Fetching ---
+            try {
+                // Attempt to fetch the result.json file from the same directory
+                // On platforms like Vercel/Netlify, this works for files within the deployed branch
+                const response = await fetch('./result.json'); // Fetch local JSON
+
+                if (!response.ok) {
+                    // If file not found or other HTTP error
+                    throw new Error(`无法加载 result.json: ${response.status} ${response.statusText}`);
+                }
+
+                const resultData = await response.json(); // Parse the JSON data
+
+                // Simulate a short delay for perceived loading, even though file load is fast
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                displayResults(resultData); // Display the results from JSON
+
+                loadingSection.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                resultsSection.classList.add('fade-in');
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('加载或解析 result.json 失败:', error);
+                errorMessage.textContent = `加载色彩报告时出错： ${error.message}. 请检查文件是否存在且格式正确。`;
+                loadingSection.classList.add('hidden');
+                errorSection.classList.remove('hidden'); // Show error message
+            }
+            // --- End Static JSON Data Fetching ---
+        });
+
+        // Function to display results (populates the #results section)
+        function displayResults(result) {
+            // Ensure result object and its properties exist before accessing them
+            document.getElementById('resultType').textContent = `${result?.koreanName || '未知'} (${result?.primaryType || '未知类型'})`;
+            document.getElementById('resultVibe').textContent = result?.vibe || '探索你的独特魅力吧！';
+            document.getElementById('resultImage').src = result?.imageUrl || 'https://placehold.co/600x300/cccccc/ffffff?text=无图像';
+            document.getElementById('resultImage').alt = `${result?.primaryType || '结果'} 色彩氛围示意图`;
+            document.getElementById('resultConfidence').textContent = result?.confidence || 'N/A';
+
+            // Use innerHTML for rationale to render potential formatting (like <br> or <p>) from JSON
+            const rationaleEl = document.getElementById('resultRationale');
+            if (result?.rationale) {
+                 // Basic sanitization: replace potential script tags (though JSON source should be trusted)
+                 // More robust sanitization might be needed depending on source
+                rationaleEl.innerHTML = result.rationale.replace(/<script.*?>.*?<\/script>/gi, '');
+            } else {
+                rationaleEl.textContent = '分析依据未提供。';
+            }
+
+
+            const secondaryEl = document.getElementById('resultSecondary');
+            if (result?.secondaryType) {
+                secondaryEl.textContent = `次要可能性: ${result.secondaryType}`;
+                secondaryEl.classList.remove('hidden');
+            } else {
+                 secondaryEl.textContent = '';
+                 secondaryEl.classList.add('hidden');
+            }
+
+            document.getElementById('resultCharacteristics').textContent = result?.characteristics || '特征信息未提供。';
+            document.getElementById('resultStyleTip').textContent = result?.styleTip || '尝试将推荐色融入你的日常穿搭吧！';
+
+            // Populate keywords list
+            const keywordsList = document.getElementById('resultKeywords');
+            keywordsList.innerHTML = ''; // Clear previous list
+            if (result?.keywords && Array.isArray(result.keywords)) {
+                result.keywords.forEach(keyword => {
+                    const li = document.createElement('li');
+                    li.textContent = keyword;
+                    keywordsList.appendChild(li);
+                });
+            } else {
+                 const li = document.createElement('li');
+                 li.textContent = '无推荐色';
+                 keywordsList.appendChild(li);
+            }
+
+
+             // Display color swatches
+            const swatchesContainer = document.getElementById('colorSwatches');
+            swatchesContainer.innerHTML = ''; // Clear previous swatches
+            const placeholderColors = { // Same placeholder mapping as before
+                '灰粉': '#D8BFD8', '雾霾蓝': '#B0C4DE', '薰衣草紫': '#E6E6FA', '柔和白': '#F5F5F5', '可可色': '#D2B48C',
+                '婴儿蓝': '#87CEFA', '淡粉紫': '#DDA0DD', '薄荷绿(冷)': '#98FB98', '纯白': '#FFFFFF', '浅灰': '#D3D3D3',
+                '覆盆子粉': '#C71585', '天蓝': '#87CEEB', '正灰': '#808080', '海军蓝(柔和)': '#6495ED', '冷调红': '#DC143C',
+                '正黑': '#000000', '纯白': '#FFFFFF', '宝蓝': '#4169E1', '玫红': '#FF00FF', '柠檬黄(冷)': '#FFFACD',
+                '深海军蓝': '#000080', '炭黑': '#36454F', '酒红(冷)': '#8B0000', '深紫': '#800080', '松石绿(深)': '#008080',
+                 '正红(冷)': '#FF0000', '纯蓝': '#0000FF', '翠绿': '#008000', '亮紫': '#BF00FF', '黑白': '#FFFFFF',
+                '亮珊瑚': '#FF7F50', '鲜橘': '#FFA500', '暖调绿': '#90EE90', '明黄': '#FFFF00', '象牙白': '#FFFFF0',
+                '蜜桃粉': '#FFDAB9', '淡黄': '#FFFFE0', '浅绿(暖)': '#98FB98', '米白': '#F5F5DC', '浅杏': '#FFEFD5',
+                 '暖调红': '#FF6347', '橘红': '#FF4500', '金色': '#FFD700', '草绿': '#9ACD32', '米黄': '#F5F5DC',
+                '卡其': '#C3B091', '橄榄绿': '#808000', '豆沙色(暖)': '#BC8F8F', '燕麦色': '#D8CDBA', '灰调橘': '#E0984E',
+                '深棕': '#8B4513', '酒红(暖)': '#A52A2A', '芥末黄': '#FFDB58', '森林绿(暖)': '#228B22', '赤陶': '#E2725B',
+                 '南瓜色': '#FF7518', '枫叶红': '#B22222', '土黄': '#DAA520', '苔藓绿': '#8FBC8F', '暖棕': '#A0522D'
+            };
+            if (result?.keywords && Array.isArray(result.keywords)) {
+                 // Add black swatch if needed for '黑白' keyword
+                 if (result.keywords.includes('黑白')) {
+                     const swatchBlack = document.createElement('div');
+                     swatchBlack.style.backgroundColor = '#000000';
+                     swatchBlack.className = 'w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip';
+                     // Add tooltip span inside
+                     const tooltipSpanBlack = document.createElement('span');
+                     tooltipSpanBlack.className = 'tooltiptext';
+                     tooltipSpanBlack.textContent = '黑色';
+                     swatchBlack.appendChild(tooltipSpanBlack);
+                     swatchesContainer.appendChild(swatchBlack);
+                 }
+                // Show max 5 swatches based on keywords
+                result.keywords.slice(0, 5).forEach(keyword => {
+                     // Skip '黑白' itself for swatch generation as black is handled above
+                     if (keyword === '黑白') return;
+
+                     const colorHex = placeholderColors[keyword] || '#cccccc'; // Fallback grey
+                     const swatch = document.createElement('div');
+                     swatch.style.backgroundColor = colorHex;
+                     swatch.className = 'w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip';
+                     // Add tooltip span inside
+                     const tooltipSpan = document.createElement('span');
+                     tooltipSpan.className = 'tooltiptext';
+                     tooltipSpan.textContent = keyword;
+                     swatch.appendChild(tooltipSpan);
+
+                     swatchesContainer.appendChild(swatch);
+                });
+            }
+        }
+
+        // --- Simulation Function (Can be removed or kept for local testing) ---
+        /*
+        function simulateKPCAnalysis(data) {
+            // ... previous simulation logic ...
+            // This function is no longer called in the main flow above,
+            // as data is now expected from result.json
+            // Keep it here if you need it for testing without a JSON file.
+            console.log("Simulating analysis with data:", data);
+            // Return a default structure if needed for testing
+             return {
+                primaryType: "Summer Mute",
+                koreanName: "여름 뮤트",
+                confidence: "High",
+                rationale: "这是模拟生成的分析理由。\n它基于一些简化的规则。",
+                secondaryType: null,
+                characteristics: "冷调, 中等明度, 柔和/浊色",
+                keywords: ["灰粉", "雾霾蓝", "薰衣草紫", "柔和白"],
+                vibe: "散发着沉静、温柔且知性的优雅魅力。",
+                styleTip: "尝试莫兰迪色系的简约穿搭。",
+                imageUrl: "https://placehold.co/600x300/eff6ff/3730a3?text=夏日清凉"
+             };
+        }
+        */
+
+    </script>
+
+</body>
+</html>
