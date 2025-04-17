@@ -426,7 +426,7 @@
                 const resultData = await response.json();
 
                 // ---- THEME APPLICATION ----
-                const { season, subtype } = getSeasonAndSubtype(result.primaryType);
+                const { season, subtype } = getSeasonAndSubtype(resultData.primaryType);
                 applyTheme(season, subtype); // Apply the dynamic theme based on season/subtype
                  // ---- END THEME APPLICATION ----
 
