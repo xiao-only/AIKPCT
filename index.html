@@ -384,14 +384,9 @@
             rootEl.style.setProperty('--focus-ring-color', focusRingColorVal);
             rootEl.style.setProperty('--accent-text-color', accentTextColor);
 
-            // Apply styles directly where needed (body background, loader, input focus)
-            // The button styles are now handled directly via CSS variables in the <style> block
+            // Apply styles directly where needed (body background)
             bodyEl.style.background = `linear-gradient(135deg, var(--theme-gradient-start), var(--theme-gradient-end))`;
-            loader.style.borderTopColor = `var(--theme-color)`;
-            // Apply accent color to specific text elements if results are visible
-             if (resultSection && !resultSection.classList.contains('hidden')) {
-                primaryTypeKoreanEl.style.color = `var(--accent-text-color)`;
-            }
+           
         }
 
         
