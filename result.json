@@ -5,7 +5,15 @@
       "rationale": "综合来看：\n- 你的皮肤反应和底调感知指向冷调。\n- 血管颜色观察作为次要参考。\n- 你感觉舒适的颜色（如 灰粉色, 雾霾蓝）和不适的颜色进一步支持了冷调和柔和/浊色的判断。\n- 你的妆容经验和饰品偏好也与 Summer Mute 类型的特征相符。\n(注意：这是示例分析理由)",
       "secondaryType": null,
       "characteristics": "冷调, 中等/偏浅明度, 柔和/浊色",
-      "keywords": ["灰粉", "雾霾蓝", "薰衣草紫", "柔和白", "可可色"],
+      "keywords": [
+          {"name": "灰粉", "hex": "#D8BFD8"},
+          {"name": "雾霾蓝", "hex": "#B0C4DE"},
+          {"name": "薰衣草紫", "hex": "#E6E6FA"},
+          {"name": "玫瑰棕", "hex": "#BC8F8F"},
+          {"name": "柔和白", "hex": "#F5F5F5"},
+          {"name": "灰绿色", "hex": "#98AFC7"},
+          {"name": "浅卡其", "hex": "#E8E4C9"}
+        ],
       "vibe": "散发着沉静、温柔且知性的优雅魅力。",
       "styleTip": "尝试莫兰迪色系的简约穿搭，搭配银饰或珍珠，更能凸显你的温柔气质。",
       "imageUrl": "/AIKPCT/assets/Summer Mute.jpeg"
