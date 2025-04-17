@@ -155,7 +155,6 @@
 
     <script>
         // --- DOM Element References ---
-        const usernameSection = document.getElementById('username-section');
         const usernameInput = document.getElementById('username-input');
         const submitButton = document.getElementById('submit-button');
         const triggerSection = document.getElementById('trigger');
@@ -229,7 +228,7 @@
                 displayResults(resultData, username);
 
                 // Hide username section, show results section
-                usernameSection.classList.add('hidden');
+                triggerSection.classList.add('hidden');
                 resultSection.classList.remove('hidden');
 
             } catch (error) {
@@ -395,7 +394,7 @@
          */
         function showUsernameSection() {
             resultSection.classList.add('hidden');
-            usernameSection.classList.remove('hidden');
+            triggerSection.classList.remove('hidden');
             usernameInput.value = ''; // Clear the input field
             errorMessageDiv.classList.add('hidden'); // Hide any previous errors
         }
