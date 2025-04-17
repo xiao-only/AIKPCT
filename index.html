@@ -229,7 +229,10 @@
 
                 // Hide username section, show results section
                 triggerSection.classList.add('hidden');
+                loadingSection.classList.add('hidden');
                 resultsSection.classList.remove('hidden');
+                resultsSection.classList.add('fade-in');
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
 
             } catch (error) {
                 console.error("加载数据时出错:", error);
