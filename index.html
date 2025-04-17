@@ -159,6 +159,7 @@
         const resultSection = document.getElementById('result-section');
         const usernameInput = document.getElementById('username-input');
         const submitButton = document.getElementById('submit-button');
+        const triggerSection = document.getElementById('trigger');
         const backButton = document.getElementById('back-button');
         const loadingSection = document.getElementById('loading');
         const errorMessageDiv = document.getElementById('error-message');
@@ -236,7 +237,7 @@
                 showError(error.message || "加载色彩报告时发生未知错误。");
             } finally {
                 // Hide loader and re-enable button
-                //triggerSection.classList.remove('hidden');
+                triggerSection.classList.remove('hidden');
                 loadingSection.classList.add('hidden');
                 submitButton.disabled = false;
             }
