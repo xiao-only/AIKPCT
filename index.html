@@ -92,11 +92,12 @@
             <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 mb-4">个人色彩解读</h1>
             <p class="text-lg text-slate-600 mb-6">准备好查看你的专属色彩分析结果了吗？</p>
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <input type="text" id="username-input" placeholder="输入用户名..." class="w-full sm:w-64 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200">
+                <input type="text" id="username-input" placeholder="输入Username..." class="w-full sm:w-64 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200">
                 <button id="submit-button" class="submit-button bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     查看我的色彩解读 ✨
                 </button>
             </div>
+             <div id="error-message" class="error-message hidden"></div>
         </section>
 
         <section id="loading" class="hidden text-center mt-10">
@@ -146,22 +147,104 @@
             </div>
         </section>
 
-        <section id="error" class="hidden text-center mt-10 text-red-600">
-             <h2 class="text-2xl font-bold mb-4">加载错误</h2>
-             <p id="errorMessage">无法加载您的色彩报告。请确保结果文件 (result.json) 存在于正确的路径下。</p>
-             <p class="text-sm mt-2">(如果您是管理员，请检查对应分支下是否已正确放置 result.json 文件。)</p>
-         </section>
+        <div class="mt-10 text-center">
+                <button id="back-button" class="bg-gray-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-600 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-200">
+                    返回
+                </button>
+        </div>
 
     </div>
 
     <script>
-        const viewResultsBtn = document.getElementById('viewResultsBtn');
-        const triggerSection = document.getElementById('trigger');
+        // --- DOM Element References ---
+        const usernameSection = document.getElementById('username-section');
+        const resultSection = document.getElementById('result-section');
+        const usernameInput = document.getElementById('username-input');
+        const submitButton = document.getElementById('submit-button');
+        const backButton = document.getElementById('back-button');
         const loadingSection = document.getElementById('loading');
-        const resultsSection = document.getElementById('results');
-        const errorSection = document.getElementById('error');
-        const errorMessage = document.getElementById('errorMessage');
+        const errorMessageDiv = document.getElementById('error-message');
+        
+        // Result display elements
+        const greetingEl = document.getElementById('greeting');
+        const primaryTypeKoreanEl = document.getElementById('primary-type-korean');
+        const primaryTypeEnglishEl = document.getElementById('primary-type-english');
+        const confidenceEl = document.getElementById('confidence');
+        const characteristicsEl = document.getElementById('characteristics');
+        const rationaleEl = document.getElementById('rationale');
+        const secondaryTypesEl = document.getElementById('secondary-types');
+        const vibeEl = document.getElementById('vibe');
+        const colorPaletteEl = document.getElementById('color-palette');
+        const styleTipEl = document.getElementById('style-tip');
+        const outfitInspirationEl = document.getElementById('outfit-inspiration');
+        const makeupReferenceEl = document.getElementById('makeup-reference');
+        const resultImageEl = document.getElementById('result-image');
 
+        // --- Event Listeners ---
+        submitButton.addEventListener('click', fetchAndDisplayResults);
+        // Allow pressing Enter in the input field to submit
+        usernameInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                fetchAndDisplayResults();
+            }
+        });
+        backButton.addEventListener('click', showUsernameSection);
+
+        // --- Functions ---
+
+        /**
+         * Fetches data based on username and displays the results.
+         */
+        async function fetchAndDisplayResults() {
+            const username = usernameInput.value.trim();
+            if (!username) {
+                showError("请输入用户名。");
+                return;
+            }
+
+            // Hide trigger, show loading and hide previous error
+            triggerSection.classList.add('hidden');
+            loadingSection.classList.remove('hidden');
+            resultsSection.classList.add('hidden');
+            errorMessageDiv.classList.add('hidden');
+            submitButton.disabled = true; // Disable button during loading
+
+            // Construct the data URL
+            // IMPORTANT: In a real application, data fetching would likely involve a server API.
+            // For this example, we assume JSON files are accessible directly.
+            // Make sure you have a corresponding .json file (e.g., "summer_mute_user.json")
+            // in the same directory or accessible via the specified path.
+            const dataUrl = `${username}.json`;
+
+            try {
+                const response = await fetch(dataUrl);
+
+                if (!response.ok) {
+                    // Handle HTTP errors like 404 Not Found
+                    throw new Error(`无法加载报告文件 (${response.status})。请检查用户名是否正确，或文件是否存在。`);
+                }
+
+                const resultData = await response.json();
+
+                // Populate the results section with data
+                displayResults(resultData, username);
+
+                // Hide username section, show results section
+                usernameSection.classList.add('hidden');
+                resultSection.classList.remove('hidden');
+
+            } catch (error) {
+                console.error("加载数据时出错:", error);
+                showError(error.message || "加载色彩报告时发生未知错误。");
+            } finally {
+                // Hide loader and re-enable button
+                 triggerSection.classList.remove('hidden');
+                loadingSection.classList.add('hidden');
+                submitButton.disabled = false;
+            }
+        }
+
+        //ori
         viewResultsBtn.addEventListener('click', async () => { // Use async for await
             // Hide trigger, show loading
             triggerSection.classList.add('hidden');
@@ -202,7 +285,7 @@
         });
 
         // Function to display results (populates the #results section)
-        function displayResults(result) {
+        function displayResults(result, username) {
             // Ensure result object and its properties exist before accessing them
             document.getElementById('resultType').textContent = `${result?.koreanName || '未知'} (${result?.primaryType || '未知类型'})`;
             document.getElementById('resultVibe').textContent = result?.vibe || '探索你的独特魅力吧！';
@@ -247,6 +330,25 @@
                  li.textContent = '无推荐色';
                  keywordsList.appendChild(li);
             }
+
+            /**
+         * Displays an error message to the user.
+         * @param {string} message - The error message to display.
+         */
+        function showError(message) {
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.classList.remove('hidden');
+        }
+
+        /**
+         * Hides the result section and shows the username input section.
+         */
+        function showUsernameSection() {
+            resultSection.classList.add('hidden');
+            usernameSection.classList.remove('hidden');
+            usernameInput.value = ''; // Clear the input field
+            errorMessageDiv.classList.add('hidden'); // Hide any previous errors
+        }
 
 
              // Display color swatches
