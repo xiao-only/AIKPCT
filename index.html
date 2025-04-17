@@ -298,20 +298,7 @@
                 colorPaletteEl.classList.add('text-gray-500', 'italic');
             }
             
-            // Populate keywords list
-            const keywordsList = document.getElementById('resultKeywords');
-            keywordsList.innerHTML = ''; // Clear previous list
-            if (result?.keywords && Array.isArray(result.keywords)) {
-                result.keywords.forEach(keyword => {
-                    const li = document.createElement('li');
-                    li.textContent = keyword;
-                    keywordsList.appendChild(li);
-                });
-            } else {
-                 const li = document.createElement('li');
-                 li.textContent = '无推荐色';
-                 keywordsList.appendChild(li);
-            }
+        
             
         }
 
