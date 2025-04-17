@@ -237,10 +237,10 @@
                 console.error("加载数据时出错:", error);
                 showError(error.message || "加载色彩报告时发生未知错误。");
                 triggerSection.classList.remove('hidden');
-                submitButton.disabled = false;
             } finally {
                 // Hide loader and re-enable button
-               loadingSection.classList.add('hidden');
+                loadingSection.classList.add('hidden');
+                submitButton.disabled = false;
             }
         }
 
