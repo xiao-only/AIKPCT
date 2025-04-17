@@ -129,7 +129,7 @@
                 </div>
                 <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
                     <h4 class="text-lg font-semibold text-pink-700 mb-2">点亮你的推荐色</h4>
-                    <div id="color-palette" class="flex flex-wrap gap-2 mt-3"></div>
+                    <div id="color-palette" class="grid grid-cols-1 flex flex-wrap gap-2 mt-3"></div>
                 </div>
             </div>
 
@@ -274,7 +274,7 @@
             if (result.keywords && result.keywords.length > 0) {
                 result.keywords.forEach(color => {
                     const colorContainer = document.createElement('div');
-                    colorContainer.classList.add('grid', 'grid-cols-1','flex', 'flex-wrap', 'gap-2', 'mt-3');
+                    colorContainer.classList.add('flex', 'flex-wrap', 'gap-2', 'mt-3');
 
                     const swatch = document.createElement('span');
                     swatch.classList.add('color-swatch');
