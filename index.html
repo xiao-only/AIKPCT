@@ -244,45 +244,6 @@
             }
         }
 
-        //ori
-        viewResultsBtn.addEventListener('click', async () => { // Use async for await
-            // Hide trigger, show loading
-            triggerSection.classList.add('hidden');
-            loadingSection.classList.remove('hidden');
-            resultsSection.classList.add('hidden');
-            errorSection.classList.add('hidden');
-
-            // --- Static JSON Data Fetching ---
-            try {
-                // Attempt to fetch the result.json file from the same directory
-                // On platforms like Vercel/Netlify, this works for files within the deployed branch
-                const response = await fetch('./result.json'); // Fetch local JSON
-
-                if (!response.ok) {
-                    // If file not found or other HTTP error
-                    throw new Error(`无法加载 result.json: ${response.status} ${response.statusText}`);
-                }
-
-                const resultData = await response.json(); // Parse the JSON data
-
-                // Simulate a short delay for perceived loading, even though file load is fast
-                await new Promise(resolve => setTimeout(resolve, 500));
-
-                displayResults(resultData); // Display the results from JSON
-
-                loadingSection.classList.add('hidden');
-                resultsSection.classList.remove('hidden');
-                resultsSection.classList.add('fade-in');
-                resultsSection.scrollIntoView({ behavior: 'smooth' });
-
-            } catch (error) {
-                console.error('加载或解析 result.json 失败:', error);
-                errorMessage.textContent = `加载色彩报告时出错： ${error.message}. 请检查文件是否存在且格式正确。`;
-                loadingSection.classList.add('hidden');
-                errorSection.classList.remove('hidden'); // Show error message
-            }
-            // --- End Static JSON Data Fetching ---
-        });
 
         // Function to display results (populates the #results section)
         function displayResults(result, username) {
