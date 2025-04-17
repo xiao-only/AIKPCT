@@ -274,7 +274,7 @@
             if (result.keywords && result.keywords.length > 0) {
                 result.keywords.forEach(color => {
                     const colorContainer = document.createElement('div');
-                    colorContainer.classList.add('flex', 'items-center', 'w-1/2', 'sm:w-1/3', 'pr-2');
+                    colorContainer.classList.add('w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip');
 
                     const swatch = document.createElement('span');
                     swatch.classList.add('color-swatch');
