@@ -145,14 +145,12 @@
                 <p class="text-md text-slate-600 mb-4">✨ 记住，个人色彩是帮助你绽放光彩的工具，而不是限制。享受探索和玩转色彩的乐趣吧！ ✨</p>
                 <p class="text-xs text-slate-400">(免责声明：本分析结果基于提供的数据生成。专业的个人色彩诊断需要结合您的具体信息和线下测试。)</p>
             </div>
-        </section>
-
-        <div class="mt-10 text-center">
+            <div class="mt-10 text-center">
                 <button id="back-button" class="bg-gray-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-600 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-200">
                     返回
                 </button>
         </div>
-
+        </section>
     </div>
 
     <script>
@@ -238,7 +236,7 @@
                 showError(error.message || "加载色彩报告时发生未知错误。");
             } finally {
                 // Hide loader and re-enable button
-                 triggerSection.classList.remove('hidden');
+                //triggerSection.classList.remove('hidden');
                 loadingSection.classList.add('hidden');
                 submitButton.disabled = false;
             }
