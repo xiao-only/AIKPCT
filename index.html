@@ -11,7 +11,6 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-image: linear-gradient(135deg, #809ddd, #fdf2f8, #faf5ff);
         }
         .fade-in {
             animation: fadeIn ease 1s;
@@ -82,17 +81,6 @@
             padding: 0.75rem 1rem; /* 内边距 */
             margin-top: 1rem; /* 上边距 */
             text-align: center;
-        }
-
-        /* Default theme variables (fallback) */
-        :root {
-            --theme-color: #60a5fa; /* Default: Softer Blue */
-            --theme-color-darker: #3b82f6;
-            --theme-color-darkest: #2563eb;
-            --theme-gradient-start: #f0f9ff; /* sky-50 */
-            --theme-gradient-end: #e0f2fe;   /* sky-100 */
-            --focus-ring-color: rgba(96, 165, 250, 0.5);
-            --accent-text-color: #3b82f6; /* blue-600 */
         }
     </style>
 </head>
@@ -172,9 +160,6 @@
         const backButton = document.getElementById('back-button');
         const loadingSection = document.getElementById('loading');
         const errorMessageDiv = document.getElementById('error-message');
-
-        const bodyEl = document.body;
-        const rootEl = document.documentElement; // For CSS variables
         
         // Result display elements
         const greetingEl = document.getElementById('greeting');
@@ -202,194 +187,6 @@
         backButton.addEventListener('click', showUsernameSection);
 
         // --- Functions ---
-
-        // --- Seasonal Theme Definitions ---
-        const seasonalThemes = {
-            Spring: {
-                // Base: Bright & Warm Peach/Coral
-                base: '#ffcc99', // Light Peach
-                accent: '#ff8c69', // Light Coral
-                subtypes: {
-                    Light: { gradientStart: '#fffacd', gradientEnd: '#ffe4e1' }, // Lemon Chiffon -> Misty Rose
-                    Bright: { gradientStart: '#ffefd5', gradientEnd: '#98fb98' }, // Papaya Whip -> Pale Green
-                    Warm: { gradientStart: '#fff8dc', gradientEnd: '#ffdab9' }, // Cornsilk -> Peach Puff
-                    Default: { gradientStart: '#fffafa', gradientEnd: '#ffebcd' } // Snow -> Blanched Almond
-                }
-            },
-            Summer: {
-                // Base: Soft & Cool Blue/Lavender
-                base: '#aec6cf', // Pastel Blue
-                accent: '#b19cd9', // Light Pastel Purple
-                subtypes: {
-                    Light: { gradientStart: '#f0f8ff', gradientEnd: '#e6e6fa' }, // Alice Blue -> Lavender
-                    Cool: { gradientStart: '#add8e6', gradientEnd: '#d8bfd8' }, // Light Blue -> Thistle
-                    Soft: { gradientStart: '#d3d3d3', gradientEnd: '#b0c4de' }, // Light Gray -> Light Steel Blue
-                    Mute: { gradientStart: '#d3d3d3', gradientEnd: '#b0c4de' }, // Alias for Soft
-                    Default: { gradientStart: '#e6e6fa', gradientEnd: '#dcdcdc' } // Lavender -> Gainsboro
-                }
-            },
-            Autumn: {
-                // Base: Warm & Muted Orange/Brown
-                base: '#d2b48c', // Tan
-                accent: '#c08081', // Old Rose
-                subtypes: {
-                    Soft: { gradientStart: '#f5f5dc', gradientEnd: '#ffe4c4' }, // Beige -> Bisque
-                    Warm: { gradientStart: '#fff8dc', gradientEnd: '#deb887' }, // Cornsilk -> Burlywood
-                    Deep: { gradientStart: '#fdf5e6', gradientEnd: '#cd853f' }, // Old Lace -> Peru
-                    Mute: { gradientStart: '#f5f5dc', gradientEnd: '#ffe4c4' }, // Alias for Soft
-                    Default: { gradientStart: '#faf0e6', gradientEnd: '#e8ddb5' } // Linen -> Khaki
-                }
-            },
-            Winter: {
-                // Base: Cool & Clear/Deep Blue/Purple
-                base: '#a0d2eb', // Light Sky Blue
-                accent: '#8a2be2', // Blue Violet
-                subtypes: {
-                    Bright: { gradientStart: '#ffffff', gradientEnd: '#e0ffff' }, // White -> Light Cyan
-                    Cool: { gradientStart: '#f0ffff', gradientEnd: '#cae1ff' }, // Azure -> Light Blue Steel
-                    Deep: { gradientStart: '#f8f8ff', gradientEnd: '#b0e0e6' }, // Ghost White -> Powder Blue
-                    Clear: { gradientStart: '#ffffff', gradientEnd: '#e0ffff' }, // Alias for Bright
-                    Default: { gradientStart: '#f5fffa', gradientEnd: '#c6e2ff' } // Mint Cream -> Light Steel Blue 2
-                }
-            },
-            // Fallback theme (used if season/subtype not found or on initial load)
-            Default: {
-                base: '#60a5fa', // Default: Softer Blue
-                accent: '#3b82f6', // blue-600
-                subtypes: {
-                    Default: { gradientStart: '#f0f9ff', gradientEnd: '#e0f2fe' } // sky-50 -> sky-100
-                }
-            }
-        };
-
-
-        // --- Initial Setup ---
-        applyTheme(); // Apply default theme on load
-
-        // --- Event Listeners ---
-        submitButton.addEventListener('click', fetchAndDisplayResults);
-        usernameInput.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                fetchAndDisplayResults();
-            }
-        });
-        backButton.addEventListener('click', showUsernameSection);
-
-        // --- Helper Functions ---
-
-        function isValidHex(hex) {
-            return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex);
-        }
-
-        // AdjustHexColor remains the same as before
-        function adjustHexColor(hex, percent) {
-            hex = hex.replace('#', '');
-            let r = parseInt(hex.substring(0, 2), 16);
-            let g = parseInt(hex.substring(2, 4), 16);
-            let b = parseInt(hex.substring(4, 6), 16);
-
-            r = Math.round(Math.min(255, Math.max(0, r * (1 + percent / 100))));
-            g = Math.round(Math.min(255, Math.max(0, g * (1 + percent / 100))));
-            b = Math.round(Math.min(255, Math.max(0, b * (1 + percent / 100))));
-
-            const rr = r.toString(16).padStart(2, '0');
-            const gg = g.toString(16).padStart(2, '0');
-            const bb = b.toString(16).padStart(2, '0');
-
-            return `#${rr}${gg}${bb}`;
-        }
-
-
-        function hexToRgb(hex) {
-            if (!isValidHex(hex)) return null;
-            hex = hex.replace('#', '');
-            if (hex.length === 3) {
-                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-            }
-            const bigint = parseInt(hex, 16);
-            const r = (bigint >> 16) & 255;
-            const g = (bigint >> 8) & 255;
-            const b = bigint & 255;
-            return { r, g, b };
-        }
-
-        /**
-         * Determines the season and subtype from the primaryType string.
-         * @param {string} primaryType - e.g., "Summer Mute", "Spring Light".
-         * @returns {{season: string, subtype: string}} - Detected season and subtype.
-         */
-        function getSeasonAndSubtype(primaryType) {
-            const typeLower = primaryType ? primaryType.toLowerCase() : '';
-            let season = 'Default';
-            let subtype = 'Default';
-
-            // Determine Season
-            if (typeLower.includes('spring')) season = 'Spring';
-            else if (typeLower.includes('summer')) season = 'Summer';
-            else if (typeLower.includes('autumn') || typeLower.includes('fall')) season = 'Autumn';
-            else if (typeLower.includes('winter')) season = 'Winter';
-
-            // Determine Subtype (if season found)
-            if (season !== 'Default') {
-                if (typeLower.includes('light')) subtype = 'Light';
-                else if (typeLower.includes('bright')) subtype = 'Bright';
-                else if (typeLower.includes('clear')) subtype = 'Clear'; // Winter Clear often overlaps Bright
-                else if (typeLower.includes('warm')) subtype = 'Warm'; // Spring/Autumn Warm
-                else if (typeLower.includes('cool')) subtype = 'Cool'; // Summer/Winter Cool
-                else if (typeLower.includes('soft')) subtype = 'Soft'; // Summer/Autumn Soft
-                else if (typeLower.includes('mute')) subtype = 'Mute'; // Summer/Autumn Mute (often alias for Soft)
-                else if (typeLower.includes('deep')) subtype = 'Deep'; // Autumn/Winter Deep
-                else if (typeLower.includes('dark')) subtype = 'Deep'; // Alias for Deep
-            }
-
-            // Handle aliases/overlaps explicitly if needed (e.g., Mute/Soft, Bright/Clear)
-            if (subtype === 'Mute' && seasonalThemes[season]?.subtypes['Soft']) subtype = 'Soft';
-            if (subtype === 'Clear' && seasonalThemes[season]?.subtypes['Bright']) subtype = 'Bright';
-            if (subtype === 'Deep' && seasonalThemes[season]?.subtypes['Dark']) subtype = 'Dark'; // If Dark is defined
-
-            return { season, subtype };
-        }
-
-
-       /**
-         * Applies the theme colors based on season and subtype.
-         * @param {string} [season='Default'] - The determined season.
-         * @param {string} [subtype='Default'] - The determined subtype.
-         */
-        function applyTheme(season = 'Default', subtype = 'Default') {
-            // Get the theme object for the season, fallback to Default
-            const seasonTheme = seasonalThemes[season] || seasonalThemes.Default;
-
-            // Get the specific subtype gradient, fallback to season's Default, then overall Default
-            const subtypeGradient = seasonTheme.subtypes[subtype] || seasonTheme.subtypes.Default || seasonalThemes.Default.subtypes.Default;
-
-            // Determine final colors
-            const themeColor = seasonTheme.base;
-            const accentTextColor = seasonTheme.accent;
-            const gradientStart = subtypeGradient.gradientStart;
-            const gradientEnd = subtypeGradient.gradientEnd;
-
-            // Calculate derived colors
-            const darkerColor = adjustHexColor(themeColor, -10);
-            const darkestColor = adjustHexColor(themeColor, -20);
-            const rgb = hexToRgb(themeColor);
-            const focusRingColorVal = rgb ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.5)` : 'rgba(96, 165, 250, 0.5)'; // Fallback focus
-
-            // Update CSS variables
-            rootEl.style.setProperty('--theme-color', themeColor);
-            rootEl.style.setProperty('--theme-color-darker', darkerColor);
-            rootEl.style.setProperty('--theme-color-darkest', darkestColor);
-            rootEl.style.setProperty('--theme-gradient-start', gradientStart);
-            rootEl.style.setProperty('--theme-gradient-end', gradientEnd);
-            rootEl.style.setProperty('--focus-ring-color', focusRingColorVal);
-            rootEl.style.setProperty('--accent-text-color', accentTextColor);
-
-            // Apply styles directly where needed (body background)
-            bodyEl.style.background = `linear-gradient(135deg, var(--theme-gradient-start), var(--theme-gradient-end))`;
-           
-        }
-
-        
 
         /**
          * Fetches data based on username and displays the results.
@@ -425,11 +222,6 @@
 
                 const resultData = await response.json();
 
-                // ---- THEME APPLICATION ----
-                const { season, subtype } = getSeasonAndSubtype(resultData.primaryType);
-                applyTheme(season, subtype); // Apply the dynamic theme based on season/subtype
-                 // ---- END THEME APPLICATION ----
-
                 // Populate the results section with data
                 displayResults(resultData, username);
 
@@ -443,7 +235,6 @@
                 console.error("加载数据时出错:", error);
                 showError(error.message || "加载色彩报告时发生未知错误。");
                 triggerSection.classList.remove('hidden');
-                applyTheme(); // Reset to default theme on error
             } finally {
                 // Hide loader and re-enable button
                 loadingSection.classList.add('hidden');
@@ -536,29 +327,6 @@
             errorMessageDiv.classList.add('hidden'); // Hide any previous errors
         }
 
-        // --- Simulation Function (Can be removed or kept for local testing) ---
-        /*
-        function simulateKPCAnalysis(data) {
-            // ... previous simulation logic ...
-            // This function is no longer called in the main flow above,
-            // as data is now expected from result.json
-            // Keep it here if you need it for testing without a JSON file.
-            console.log("Simulating analysis with data:", data);
-            // Return a default structure if needed for testing
-             return {
-                primaryType: "Summer Mute",
-                koreanName: "여름 뮤트",
-                confidence: "High",
-                rationale: "这是模拟生成的分析理由。\n它基于一些简化的规则。",
-                secondaryType: null,
-                characteristics: "冷调, 中等明度, 柔和/浊色",
-                keywords: ["灰粉", "雾霾蓝", "薰衣草紫", "柔和白"],
-                vibe: "散发着沉静、温柔且知性的优雅魅力。",
-                styleTip: "尝试莫兰迪色系的简约穿搭。",
-                imageUrl: "https://placehold.co/600x300/eff6ff/3730a3?text=夏日清凉"
-             };
-        }
-        */
 
     </script>
 
