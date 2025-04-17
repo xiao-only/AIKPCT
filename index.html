@@ -229,7 +229,7 @@
 
                 // Hide username section, show results section
                 triggerSection.classList.add('hidden');
-                resultSection.classList.remove('hidden');
+                resultsSection.classList.remove('hidden');
 
             } catch (error) {
                 console.error("加载数据时出错:", error);
@@ -393,7 +393,7 @@
          * Hides the result section and shows the username input section.
          */
         function showUsernameSection() {
-            resultSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
             triggerSection.classList.remove('hidden');
             usernameInput.value = ''; // Clear the input field
             errorMessageDiv.classList.add('hidden'); // Hide any previous errors
