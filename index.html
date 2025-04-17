@@ -129,9 +129,7 @@
                 </div>
                 <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
                     <h4 class="text-lg font-semibold text-pink-700 mb-2">点亮你的推荐色</h4>
-                    <ul id="resultKeywords" class="list-disc list-inside text-slate-600 space-y-1"></ul>
-                     <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3">
-                         </div>
+                    <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3"></div>
                 </div>
             </div>
 
@@ -270,6 +268,36 @@
             document.getElementById('resultCharacteristics').textContent = result?.characteristics || '特征信息未提供。';
             document.getElementById('resultStyleTip').textContent = result?.styleTip || '尝试将推荐色融入你的日常穿搭吧！';
 
+            // Color Palette
+            const colorPaletteEl = document.getElementById('color-palette');
+            colorPaletteEl.innerHTML = '';
+            if (result.keywords && result.keywords.length > 0) {
+                result.keywords.forEach(color => {
+                    const colorContainer = document.createElement('div');
+                    colorContainer.classList.add('flex', 'items-center', 'w-1/2', 'sm:w-1/3', 'pr-2');
+
+                    const swatch = document.createElement('span');
+                    swatch.classList.add('color-swatch');
+                    swatch.style.backgroundColor = color.hex || '#cccccc';
+
+                    const tooltipSpan = document.createElement('span');
+                     tooltipSpan.className = 'tooltiptext';
+                     tooltipSpan.textContent = color.hex;
+                     swatch.appendChild(tooltipSpan);
+
+                    const name = document.createElement('span');
+                    name.textContent = color.name || '未知颜色';
+                    name.classList.add('text-sm', 'text-gray-700', 'color-name');
+
+                    colorContainer.appendChild(swatch);
+                    colorContainer.appendChild(name);
+                    colorPaletteEl.appendChild(colorContainer);
+                });
+            } else {
+                colorPaletteEl.textContent = '未提供调色板信息。';
+                colorPaletteEl.classList.add('text-gray-500', 'italic');
+            }
+            
             // Populate keywords list
             const keywordsList = document.getElementById('resultKeywords');
             keywordsList.innerHTML = ''; // Clear previous list
@@ -284,56 +312,7 @@
                  li.textContent = '无推荐色';
                  keywordsList.appendChild(li);
             }
-
-
-             // Display color swatches
-            const swatchesContainer = document.getElementById('colorSwatches');
-            swatchesContainer.innerHTML = ''; // Clear previous swatches
-            const placeholderColors = { // Same placeholder mapping as before
-                '灰粉': '#D8BFD8', '雾霾蓝': '#B0C4DE', '薰衣草紫': '#E6E6FA', '柔和白': '#F5F5F5', '可可色': '#D2B48C',
-                '婴儿蓝': '#87CEFA', '淡粉紫': '#DDA0DD', '薄荷绿(冷)': '#98FB98', '纯白': '#FFFFFF', '浅灰': '#D3D3D3',
-                '覆盆子粉': '#C71585', '天蓝': '#87CEEB', '正灰': '#808080', '海军蓝(柔和)': '#6495ED', '冷调红': '#DC143C',
-                '正黑': '#000000', '纯白': '#FFFFFF', '宝蓝': '#4169E1', '玫红': '#FF00FF', '柠檬黄(冷)': '#FFFACD',
-                '深海军蓝': '#000080', '炭黑': '#36454F', '酒红(冷)': '#8B0000', '深紫': '#800080', '松石绿(深)': '#008080',
-                 '正红(冷)': '#FF0000', '纯蓝': '#0000FF', '翠绿': '#008000', '亮紫': '#BF00FF', '黑白': '#FFFFFF',
-                '亮珊瑚': '#FF7F50', '鲜橘': '#FFA500', '暖调绿': '#90EE90', '明黄': '#FFFF00', '象牙白': '#FFFFF0',
-                '蜜桃粉': '#FFDAB9', '淡黄': '#FFFFE0', '浅绿(暖)': '#98FB98', '米白': '#F5F5DC', '浅杏': '#FFEFD5',
-                 '暖调红': '#FF6347', '橘红': '#FF4500', '金色': '#FFD700', '草绿': '#9ACD32', '米黄': '#F5F5DC',
-                '卡其': '#C3B091', '橄榄绿': '#808000', '豆沙色(暖)': '#BC8F8F', '燕麦色': '#D8CDBA', '灰调橘': '#E0984E',
-                '深棕': '#8B4513', '酒红(暖)': '#A52A2A', '芥末黄': '#FFDB58', '森林绿(暖)': '#228B22', '赤陶': '#E2725B',
-                 '南瓜色': '#FF7518', '枫叶红': '#B22222', '土黄': '#DAA520', '苔藓绿': '#8FBC8F', '暖棕': '#A0522D'
-            };
-            if (result?.keywords && Array.isArray(result.keywords)) {
-                 // Add black swatch if needed for '黑白' keyword
-                 if (result.keywords.includes('黑白')) {
-                     const swatchBlack = document.createElement('div');
-                     swatchBlack.style.backgroundColor = '#000000';
-                     swatchBlack.className = 'w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip';
-                     // Add tooltip span inside
-                     const tooltipSpanBlack = document.createElement('span');
-                     tooltipSpanBlack.className = 'tooltiptext';
-                     tooltipSpanBlack.textContent = '黑色';
-                     swatchBlack.appendChild(tooltipSpanBlack);
-                     swatchesContainer.appendChild(swatchBlack);
-                 }
-                // Show max 5 swatches based on keywords
-                result.keywords.slice(0, 5).forEach(keyword => {
-                     // Skip '黑白' itself for swatch generation as black is handled above
-                     if (keyword === '黑白') return;
-
-                     const colorHex = placeholderColors[keyword] || '#cccccc'; // Fallback grey
-                     const swatch = document.createElement('div');
-                     swatch.style.backgroundColor = colorHex;
-                     swatch.className = 'w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip';
-                     // Add tooltip span inside
-                     const tooltipSpan = document.createElement('span');
-                     tooltipSpan.className = 'tooltiptext';
-                     tooltipSpan.textContent = keyword;
-                     swatch.appendChild(tooltipSpan);
-
-                     swatchesContainer.appendChild(swatch);
-                });
-            }
+            
         }
 
          /**
