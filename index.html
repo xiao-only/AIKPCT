@@ -229,7 +229,6 @@
 
                 // Hide username section, show results section
                 triggerSection.classList.add('hidden');
-                loadingSection.classList.add('hidden');
                 resultsSection.classList.remove('hidden');
                 resultsSection.classList.add('fade-in');
                 resultsSection.scrollIntoView({ behavior: 'smooth' });
@@ -237,11 +236,11 @@
             } catch (error) {
                 console.error("加载数据时出错:", error);
                 showError(error.message || "加载色彩报告时发生未知错误。");
+                triggerSection.classList.remove('hidden');
+                submitButton.disabled = false;
             } finally {
                 // Hide loader and re-enable button
-                triggerSection.classList.remove('hidden');
-                loadingSection.classList.add('hidden');
-                submitButton.disabled = false;
+               loadingSection.classList.add('hidden');
             }
         }
 
