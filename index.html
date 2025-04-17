@@ -289,7 +289,7 @@
             const swatchesContainer = document.getElementById('colorSwatches');
             swatchesContainer.innerHTML = ''; // Clear previous swatches
             // Show max 5 swatches based on keywords
-            result.keywords.slice(0, 5).forEach(keyword => {
+            result.keywords.forEach(keyword => {
         
                 const swatch = document.createElement('div');
                 swatch.style.backgroundColor = keyword.hex;
