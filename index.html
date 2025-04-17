@@ -255,14 +255,8 @@
 
             // Use innerHTML for rationale to render potential formatting (like <br> or <p>) from JSON
             const rationaleEl = document.getElementById('resultRationale');
-            if (result?.rationale) {
-                 // Basic sanitization: replace potential script tags (though JSON source should be trusted)
-                 // More robust sanitization might be needed depending on source
-                rationaleEl.innerHTML = result.rationale.replace(/<script.*?>.*?<\/script>/gi, '');
-            } else {
-                rationaleEl.textContent = '分析依据未提供。';
-            }
-
+            rationaleEl.textContent = result.rationale || '分析依据未提供';
+            
 
             const secondaryEl = document.getElementById('resultSecondary');
             if (result?.secondaryType) {
