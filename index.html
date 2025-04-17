@@ -330,25 +330,6 @@
                  keywordsList.appendChild(li);
             }
 
-            /**
-         * Displays an error message to the user.
-         * @param {string} message - The error message to display.
-         */
-        function showError(message) {
-            errorMessageDiv.textContent = message;
-            errorMessageDiv.classList.remove('hidden');
-        }
-
-        /**
-         * Hides the result section and shows the username input section.
-         */
-        function showUsernameSection() {
-            resultSection.classList.add('hidden');
-            usernameSection.classList.remove('hidden');
-            usernameInput.value = ''; // Clear the input field
-            errorMessageDiv.classList.add('hidden'); // Hide any previous errors
-        }
-
 
              // Display color swatches
             const swatchesContainer = document.getElementById('colorSwatches');
@@ -398,6 +379,25 @@
                      swatchesContainer.appendChild(swatch);
                 });
             }
+        }
+
+         /**
+         * Displays an error message to the user.
+         * @param {string} message - The error message to display.
+         */
+        function showError(message) {
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.classList.remove('hidden');
+        }
+
+        /**
+         * Hides the result section and shows the username input section.
+         */
+        function showUsernameSection() {
+            resultSection.classList.add('hidden');
+            usernameSection.classList.remove('hidden');
+            usernameInput.value = ''; // Clear the input field
+            errorMessageDiv.classList.add('hidden'); // Hide any previous errors
         }
 
         // --- Simulation Function (Can be removed or kept for local testing) ---
