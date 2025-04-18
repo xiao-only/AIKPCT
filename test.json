@@ -1,0 +1,23 @@
+
+{
+  "primaryType": "Summer Mute",
+  "koreanName": "여름 뮤트",
+  "confidence": "Medium",
+  "rationale": "综合来看：\n- 你的皮肤反应（先晒红后晒黑）和底调感知（中性）指向冷至中性调。\n- 深棕色发眼和中等对比度支持柔和、低彩度特质。\n- 适合柔和色系（如灰粉、雾蓝）且不适合亮暖色进一步确认 Summer Mute 的低彩度冷调特征。\n- 风格偏自然、知性与 Summer Mute 优雅气质契合。",
+  "secondaryType": ["Autumn Mute", "Summer Light"],
+  "characteristics": "冷至中性色调, 中等至较高明度, 柔和/低彩度",
+  "keywords": [
+    {"name": "灰粉", "hex": "#D8BFD8"},
+    {"name": "雾霾蓝", "hex": "#B0C4DE"},
+    {"name": "薰衣草紫", "hex": "#E6E6FA"},
+    {"name": "玫瑰棕", "hex": "#BC8F8F"},
+    {"name": "柔和白", "hex": "#F5F5F5"},
+    {"name": "灰绿色", "hex": "#98AFC7"},
+    {"name": "浅卡其", "hex": "#E8E4C9"}
+  ],
+  "vibe": "散发着沉静、温柔且知性的优雅魅力。",
+  "styleTip": "- 饰品优先选择银色或白金色，哑光质感更佳。\n- 注意全身色彩搭配的和谐性，保持柔和对比。",
+  "outfitInspiration": "- 尝试莫兰迪色系的针织衫搭配白色阔。\n- 选择有垂坠感的丝质或天丝。",
+  "makeupReference": "- 眼妆适合使用灰粉、浅棕色系。\n- 口红推荐丝绒或柔雾质地的豆沙色。",
+  "imageUrl": "https://placehold.co/600x300/eff6ff/3730a3?text=Summer+Mute"
+}
