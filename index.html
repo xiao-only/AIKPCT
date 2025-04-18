@@ -107,11 +107,11 @@
 
         <section id="results" class="flex flex-col justify-center items-center gap-2 hidden mt-8 fade-in">
             <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 text-center">恭喜你！发现了你的专属色彩气质</h2>
-            <p class="text-lg text-indigo-300 text-opacity-100 text-center">让我们一起探索你独特的色彩个性吧</p>
-            <div class="bg-gradient-to-r from-blue-200 via-pink-200 to-purple-200 p-6 rounded-full shadow-md text-center">
+            <p class="text-lg text-indigo-300 text-opacity-100 text-center mb-2">让我们一起探索你独特的色彩个性吧</p>
+            <div class="bg-gradient-to-r from-blue-200 via-pink-200 to-purple-200 p-6 rounded-full shadow-md text-center mb-2 transition duration-150 hover:scale-110">
                 <h3 id="resultType" class="text-2xl md:text-3xl font-bold text-white"></h3>
             </div>
-            <div class="bg-neutral-200 rounded-full shadow-md text-center mb-4">
+            <div class="bg-neutral-200 rounded-full shadow-md text-center mb-4 transition duration-150 hover:scale-110">
                 <p class="text-sm text-gray-400 p-4">置信度: <span id="resultConfidence" class="font-medium"></span></p>
             </div>
             <div class="grid md:grid-cols-2 gap-6 mb-6">
@@ -318,7 +318,7 @@
         
                 const swatch = document.createElement('div');
                 swatch.style.backgroundColor = keyword.hex;
-                swatch.className = 'w-12 h-12 rounded-full border border-slate-300 hover:shadow-sm tooltip ease-in-out';
+                swatch.className = 'w-12 h-12 rounded-full border border-slate-300 shadow-md tooltip transition duration-150 hover:scale-110';
                 // Add tooltip span inside
                 const tooltipSpan = document.createElement('span');
                 tooltipSpan.className = 'tooltiptext';
