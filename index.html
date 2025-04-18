@@ -273,12 +273,12 @@
             const secondaryEl = document.getElementById('resultSecondary');
             const secondaryDl = document.getElementById('typeSecondary');
             
-            secondaryTypesEl.innerHTML = '';
+            secondaryEl.innerHTML = '';
             if (result.secondaryType && result.secondaryType.length > 0) {
                 result.secondaryType.forEach(type => {
                     const li = document.createElement('li');
                     li.textContent = type;
-                    secondaryTypesEl.appendChild(li);
+                    secondaryEl.appendChild(li);
                     secondaryEl.classList.remove('hidden');
                     secondaryDl.classList.remove('hidden');
                 });
@@ -286,7 +286,7 @@
                 const li = document.createElement('li');
                 li.textContent = '无明显的次要类型倾向';
                 li.classList.add('text-slate-500', 'italic');
-                secondaryTypesEl.appendChild(li);
+                secondaryEl.appendChild(li);
                 secondaryEl.classList.add('hidden');
                 secondaryDl.classList.add('hidden');
             }
