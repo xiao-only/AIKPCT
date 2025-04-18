@@ -132,8 +132,8 @@
                 </div>
             </div>
             <div class="mb-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-xl">
-                 <h4 class="text-lg font-semibold text-purple-700 mb-2">专属于你的风格搭配建议</h4>
-                 <p id="resultStyleTip" class="text-slate-600 text-base"></p>
+                <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2  pb-1">专属于你的风格搭配建议</h4>
+                <ul id="resultStyleTip" class="list-disc list-inside text-base text-slate-600 mb-6"></ul>
             </div>
             <div class="text-center mt-8 border-t border-slate-200 pt-6">
                 <p class="text-md text-slate-600 mb-4">✨ 记住，个人色彩是帮助您绽放光彩的工具，而不是限制。享受探索和玩转色彩的乐趣吧！ ✨</p>
@@ -288,7 +288,21 @@
             }
 
             document.getElementById('resultCharacteristics').textContent = result?.characteristics || '特征信息未提供。';
-            document.getElementById('resultStyleTip').textContent = result?.styleTip || '尝试将推荐色融入您的日常穿搭吧！';
+            
+            const styleTipE1 = document.getElementById('resultStyleTip');
+            styleTipE1.innerHTML = '';
+            if (result.styleTip && result.styleTip.length > 0) {
+                result.styleTip.forEach(type => {
+                    const li = document.createElement('li');
+                    li.textContent = type;
+                    styleTipE1.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = '尝试将推荐色融入您的日常穿搭吧！';
+                li.classList.add('text-slate-500', 'italic');
+                styleTipE1.appendChild(li);
+            }
 
             
             // Display color swatches
