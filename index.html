@@ -114,21 +114,21 @@
             <div class="bg-neutral-200 rounded-full shadow-md text-center mb-4">
                 <p class="text-sm text-gray-400 p-4">置信度: <span id="resultConfidence" class="font-medium"></span></p>
             </div>
-            <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div class=" gap-6 mb-6">
                 <div class="mb-6 bg-white p-4 rounded-lg shadow-sm gap-4 text-center hover:shadow-xl">
                     <img id="resultImage" src="https://placehold.co/600x300/E0F2FE/0C4A6E?text=你的色彩氛围" alt="色彩氛围示意图" class="rounded-lg mx-auto shadow-sm mb-6 w-full max-w-md bg-sky-100 p-4">
                     <p id="resultCharacteristics" class="text-slate-600 font-semibold mb-6"></p>
                     <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2  pb-1">你的专属色彩</h4>
-                    <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3 mb-6"></div> 
+                    <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3 mb-6 items-center grid md:grid-cols-5"></div> 
                 </div> 
                 <div class="mb-6 bg-white p-4 rounded-lg shadow-sm gap-4 text-left hover:shadow-xl">
                     <h4 class="text-xl font-semibold text-[#89729E] border-[#E8D0D5] mb-3 border-b-2 pb-1">你的色彩故事 (分析依据)</h4>
-                    <div id="resultRationale" class="text-slate-600 leading-loose text-sm text-left md:text-base space-y-2 whitespace-pre-line mb-6"></div>
+                    <div id="resultRationale" class="text-slate-600 leading-relaxed text-sm text-left md:text-base space-y-2 whitespace-pre-line mb-6"></div>
                      <div class=" mb-6 italic border-l-4 border-[#E8D0D5] bg-[#e8d0d533] text-left p-2 rounded-lg">
                         <p class="text-md text-slate-600 mb-4">你的色彩气质: <span id="resultVibe" class="text-md text-slate-600 font-bold mb-4"></span></p>
                      </div>
-                    <h4 id ="typeSecondary" class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2 pb-1">次要类型倾向</h4>
-                    <p id="resultSecondary" class="text-sm text-slate-600 mb-6"></p>
+                    <h4 id="typeSecondary" class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2 pb-1">次要类型倾向</h4>
+                    <ul id="resultSecondary" class="list-disc list-inside text-sm text-slate-600 mb-6"></ul>
                 </div>
             </div>
            
@@ -273,12 +273,20 @@
             const secondaryEl = document.getElementById('resultSecondary');
             const secondaryDl = document.getElementById('typeSecondary');
             
-            if (result?.secondaryType) {
-                secondaryEl.textContent = `次要可能性: ${result.secondaryType}`;
-                secondaryEl.classList.remove('hidden');
-                secondaryDl.classList.remove('hidden');
+            secondaryTypesEl.innerHTML = '';
+            if (result.secondaryType && result.secondaryType.length > 0) {
+                result.secondaryType.forEach(type => {
+                    const li = document.createElement('li');
+                    li.textContent = type;
+                    secondaryTypesEl.appendChild(li);
+                    secondaryEl.classList.remove('hidden');
+                    secondaryDl.classList.remove('hidden');
+                });
             } else {
-                secondaryEl.textContent = '';
+                const li = document.createElement('li');
+                li.textContent = '无明显的次要类型倾向';
+                li.classList.add('text-slate-500', 'italic');
+                secondaryTypesEl.appendChild(li);
                 secondaryEl.classList.add('hidden');
                 secondaryDl.classList.add('hidden');
             }
@@ -310,7 +318,7 @@
         
                 const swatch = document.createElement('div');
                 swatch.style.backgroundColor = keyword.hex;
-                swatch.className = 'w-8 h-8 rounded-full border border-slate-300 shadow-sm tooltip';
+                swatch.className = 'w-12 h-12 rounded-full border border-slate-300 hover:shadow-sm tooltip ease-in-out';
                 // Add tooltip span inside
                 const tooltipSpan = document.createElement('span');
                 tooltipSpan.className = 'tooltiptext';
