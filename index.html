@@ -293,21 +293,6 @@
             document.getElementById('resultCharacteristics').textContent = result?.characteristics || '特征信息未提供。';
             document.getElementById('resultStyleTip').textContent = result?.styleTip || '尝试将推荐色融入您的日常穿搭吧！';
 
-            // Populate keywords list
-            const keywordsList = document.getElementById('resultKeywords');
-            keywordsList.innerHTML = ''; // Clear previous list
-            if (result?.keywords && Array.isArray(result.keywords)) {
-                result.keywords.forEach(keyword => {
-                    const li = document.createElement('li');
-                    li.textContent = keyword.name;
-                    keywordsList.appendChild(li);
-                });
-            } else {
-                 const li = document.createElement('li');
-                 li.textContent = '无推荐色';
-                 keywordsList.appendChild(li);
-            }
-
             
             // Display color swatches
             const swatchesContainer = document.getElementById('colorSwatches');
