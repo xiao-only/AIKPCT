@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>你的个人色彩解读 | KPC 结果</title>
+    <title>您的个人色彩解读 | KPC 结果</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,7 +90,7 @@
 
         <section id="trigger" class="text-center">
             <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 mb-4">个人色彩解读</h1>
-            <p class="text-lg text-slate-600 mb-6">准备好查看你的专属色彩分析结果了吗？</p>
+            <p class="text-lg text-slate-600 mb-6">准备好查看您的专属色彩分析结果了吗？</p>
             <div class="flex flex-col justify-center items-center gap-4">
                 <input type="text" id="username-input" placeholder="输入 Username..." class="w-full sm:w-64 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200">
                 <button id="submit-button" class="submit-button bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">
@@ -102,12 +102,12 @@
 
         <section id="loading" class="hidden text-center mt-10">
              <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p class="text-lg text-slate-600">正在加载你的色彩报告...</p>
+            <p class="text-lg text-slate-600">正在加载您的色彩报告...</p>
         </section>
 
         <section id="results" class="flex flex-col justify-center items-center gap-2 hidden mt-8 fade-in">
-            <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 text-center">恭喜你！发现了你的专属色彩气质</h2>
-            <p class="text-lg text-indigo-300 text-opacity-100 text-center mb-2">让我们一起探索你独特的色彩个性吧</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 text-center">恭喜您！发现了您的专属色彩气质</h2>
+            <p class="text-lg text-indigo-300 text-opacity-100 text-center mb-2">让我们一起探索您独特的色彩个性吧</p>
             <div class="bg-gradient-to-r from-blue-200 via-pink-200 to-purple-200 p-6 rounded-full shadow-md text-center mb-2 transition duration-150 hover:scale-110">
                 <h3 id="resultType" class="text-2xl md:text-3xl font-bold text-white"></h3>
             </div>
@@ -116,44 +116,30 @@
             </div>
             <div class="grid md:grid-cols-2 gap-6 mb-6">
                 <div class="mb-6 bg-white p-4 rounded-lg shadow-sm gap-4 text-center hover:shadow-xl">
-                    <img id="resultImage" src="https://placehold.co/600x300/E0F2FE/0C4A6E?text=你的色彩氛围" alt="色彩氛围示意图" class="rounded-lg mx-auto shadow-sm mb-6 w-full max-w-md bg-sky-100 p-4">
+                    <img id="resultImage" src="https://placehold.co/600x300/E0F2FE/0C4A6E?text=您的色彩氛围" alt="色彩氛围示意图" class="rounded-lg mx-auto shadow-sm mb-6 w-full max-w-md bg-sky-100 p-4">
                     <p id="resultCharacteristics" class="text-slate-600 font-semibold mb-6"></p>
-                    <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2  pb-1">你的专属色彩</h4>
+                    <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2  pb-1">您的专属色彩</h4>
                     <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3 mb-6 items-center grid md:grid-cols-5"></div> 
                 </div> 
                 <div class="mb-6 bg-white p-4 rounded-lg shadow-sm gap-4 text-left hover:shadow-xl">
-                    <h4 class="text-xl font-semibold text-[#89729E] border-[#E8D0D5] mb-3 border-b-2 pb-1">你的色彩故事 (分析依据)</h4>
-                    <div id="resultRationale" class="text-slate-600 leading-relaxed text-sm text-left md:text-base space-y-2 whitespace-pre-line mb-6"></div>
-                     <div class=" mb-6 italic border-l-4 border-[#E8D0D5] bg-[#e8d0d533] text-left p-2 rounded-lg">
-                        <p class="text-md text-slate-600 mb-4">你的色彩气质: <span id="resultVibe" class="text-md text-slate-600 font-bold mb-4"></span></p>
-                     </div>
+                    <h4 class="text-xl font-semibold text-[#89729E] border-[#E8D0D5] mb-3 border-b-2 pb-1">您的色彩故事 (分析依据)</h4>
+                    <ul id="resultRationale" class="list-disc list-inside text-slate-600 text-left md:text-base space-y-2 mb-6"></div>
+                    <div class=" mb-6 italic border-l-4 border-[#E8D0D5] bg-[#e8d0d533] text-left p-2 rounded-lg">
+                        <p class="text-md text-slate-600 mb-4">您的色彩气质: <span id="resultVibe" class="text-md text-slate-600 font-bold mb-4"></span></p>
+                    </div>
                     <h4 id="typeSecondary" class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2 pb-1">次要类型倾向</h4>
                     <ul id="resultSecondary" class="list-disc list-inside text-sm text-slate-600 mb-6"></ul>
                 </div>
             </div>
            
 
-            
-
-            <div class="grid md:grid-cols-2 gap-6 mb-6">
-                <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                    <h4 class="text-lg font-semibold text-blue-700 mb-2">核心色彩特征</h4>
-                    
-                </div>
-                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
-                    
-                    <ul id="resultKeywords" class="list-disc list-inside text-slate-600 space-y-1"></ul>
-                    
-                </div>
-            </div>
-
-             <div class="mb-6 bg-purple-50 p-4 rounded-lg shadow-sm">
+             <div class="mb-6 bg-white p-4 rounded-lg shadow-sm">
                  <h4 class="text-lg font-semibold text-purple-700 mb-2">风格融合小贴士</h4>
                  <p id="resultStyleTip" class="text-slate-600"></p>
             </div>
 
             <div class="text-center mt-8 border-t border-slate-200 pt-6">
-                <p class="text-md text-slate-600 mb-4">✨ 记住，个人色彩是帮助你绽放光彩的工具，而不是限制。享受探索和玩转色彩的乐趣吧！ ✨</p>
+                <p class="text-md text-slate-600 mb-4">✨ 记住，个人色彩是帮助您绽放光彩的工具，而不是限制。享受探索和玩转色彩的乐趣吧！ ✨</p>
                 <p class="text-xs text-slate-400">(免责声明：本分析结果基于提供的数据生成。专业的个人色彩诊断需要结合您的具体信息和线下测试。)</p>
             </div>
             <div class="mt-10 text-center">
@@ -260,14 +246,27 @@
         function displayResults(result, username) {
             // Ensure result object and its properties exist before accessing them
             document.getElementById('resultType').textContent = `${result?.koreanName || '未知'} (${result?.primaryType || '未知类型'})`;
-            document.getElementById('resultVibe').textContent = result?.vibe || '探索你的独特魅力吧！';
+            document.getElementById('resultVibe').textContent = result?.vibe || '探索您的独特魅力吧！';
             document.getElementById('resultImage').src = result?.imageUrl || 'https://placehold.co/600x300/cccccc/ffffff?text=无图像';
             document.getElementById('resultImage').alt = `${result?.primaryType || '结果'} 色彩氛围示意图`;
             document.getElementById('resultConfidence').textContent = result?.confidence || 'N/A';
 
             // Use innerHTML for rationale to render potential formatting (like <br> or <p>) from JSON
             const rationaleEl = document.getElementById('resultRationale');
-            rationaleEl.textContent = result?.rationale || '分析依据未提供';
+            rationaleEl.innerHTML = '';
+            if (result.rationale && result.rationale.length > 0) {
+                result.rationale.forEach(type => {
+                    const li = document.createElement('li');
+                    li.textContent = type;
+                    rationaleEl.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = '分析依据未提供';
+                li.classList.add('text-slate-500', 'italic');
+                rationaleEl.appendChild(li);
+            }
+            
             
 
             const secondaryEl = document.getElementById('resultSecondary');
@@ -292,7 +291,7 @@
             }
 
             document.getElementById('resultCharacteristics').textContent = result?.characteristics || '特征信息未提供。';
-            document.getElementById('resultStyleTip').textContent = result?.styleTip || '尝试将推荐色融入你的日常穿搭吧！';
+            document.getElementById('resultStyleTip').textContent = result?.styleTip || '尝试将推荐色融入您的日常穿搭吧！';
 
             // Populate keywords list
             const keywordsList = document.getElementById('resultKeywords');
