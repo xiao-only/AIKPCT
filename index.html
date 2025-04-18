@@ -48,7 +48,7 @@
             color: #fff;
             text-align: center;
             border-radius: 6px;
-            padding: 5px 0;
+            padding: 5px 5px;
             position: absolute;
             z-index: 1;
             bottom: 125%; /* Position above the element */
@@ -107,7 +107,7 @@
 
         <section id="results" class="flex flex-col justify-center items-center gap-2 hidden mt-8 fade-in">
             <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 text-center">恭喜您！发现了您的专属色彩气质</h2>
-            <p class="text-lg text-indigo-300 text-opacity-100 text-center mb-2">让我们一起探索您独特的色彩个性吧</p>
+            <p class="text-lg text-indigo-400 text-opacity-100 text-center mb-2">让我们一起探索您独特的色彩个性吧</p>
             <div class="bg-gradient-to-r from-blue-200 via-pink-200 to-purple-200 p-6 rounded-full shadow-md text-center mb-2 transition duration-150 hover:scale-110">
                 <h3 id="resultType" class="text-2xl md:text-3xl font-bold text-white"></h3>
             </div>
@@ -116,24 +116,24 @@
             </div>
             <div class="grid md:grid-cols-2 gap-6 mb-2">
                 <div class="bg-white p-4 rounded-lg shadow-sm gap-4 text-center hover:shadow-xl">
-                    <img id="resultImage" src="https://placehold.co/600x300/E0F2FE/0C4A6E?text=您的色彩氛围" alt="色彩氛围示意图" class="rounded-lg mx-auto shadow-sm mb-6 w-full max-w-md bg-sky-100 p-4">
+                    <img id="resultImage" src="https://placehold.co/600x300/E0F2FE/0C4A6E?text=您的色彩氛围" alt="色彩氛围示意图" class="rounded-lg mx-auto shadow-sm mb-6 w-full max-w-md bg-sky-100 p-4 transition-all duration-500 filter blur hover:blur-0">
                     <p id="resultCharacteristics" class="text-slate-600 font-semibold mb-6"></p>
-                    <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2  pb-1">您的专属色彩</h4>
+                    <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-2 border-b-2  pb-1">您的专属色彩</h4>
                     <div id="colorSwatches" class="flex flex-wrap gap-2 mt-3 mb-6 items-center grid md:grid-cols-5"></div> 
                 </div> 
                 <div class="bg-white p-4 rounded-lg shadow-sm gap-4 text-left hover:shadow-xl">
-                    <h4 class="text-xl font-semibold text-[#89729E] border-[#E8D0D5] mb-3 border-b-2 pb-1">您的色彩故事 (分析依据)</h4>
-                    <ul id="resultRationale" class="list-disc list-inside text-slate-600 text-left text-sm space-y-2 mb-6"></ul>
+                    <h4 class="text-xl font-semibold text-[#89729E] border-[#E8D0D5] mb-2 border-b-2 pb-1">您的色彩故事 (分析依据)</h4>
+                    <ul id="resultRationale" class="list-disc list-outside text-slate-600 text-left text-sm space-y-2 mb-6 p-2"></ul>
                     <div class=" mb-6 italic border-l-4 border-[#E8D0D5] bg-[#e8d0d533] text-left p-2 rounded-lg">
                         <p class="text-md text-slate-600 mb-4">您的色彩气质: <span id="resultVibe" class="text-md text-slate-600 font-bold mb-4"></span></p>
                     </div>
-                    <h4 id="typeSecondary" class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2 pb-1">次要类型倾向</h4>
+                    <h4 id="typeSecondary" class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-2 border-b-2 pb-1">次要类型倾向</h4>
                     <ul id="resultSecondary" class="list-disc list-inside text-sm text-slate-600 mb-6"></ul>
                 </div>
             </div>
-            <div class="mb-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-xl">
-                <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-4 border-b-2  pb-1">专属于你的风格搭配建议</h4>
-                <ul id="resultStyleTip" class="list-disc list-inside text-base text-slate-600 mb-6"></ul>
+            <div class="mb-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-xl w-full">
+                <h4 class="text-lg font-semibold text-[#89729E] border-[#E8D0D5] mb-2 border-b-2  pb-1">专属于你的风格搭配建议</h4>
+                <ul id="resultStyleTip" class="list-disc list-inside text-base text-slate-600 mb-6 marker:text-[#B5ACBD]"></ul>
             </div>
             <div class="text-center mt-8 border-t border-slate-200 pt-6">
                 <p class="text-md text-slate-600 mb-4">✨ 记住，个人色彩是帮助您绽放光彩的工具，而不是限制。享受探索和玩转色彩的乐趣吧！ ✨</p>
